@@ -1,0 +1,25 @@
+{% load staticfiles %}
+<head>
+	<link href='{% static "css/jquery.terminal.css" %}' rel="stylesheet"/>
+	<link href='{% static "terminal/css/terminal.css" %}' rel="stylesheet"/>
+
+	<script src='{% static "js/jquery-1.7.1.min.js" %}'></script>
+	<script src='{% static "js/jquery.mousewheel-min.js" %}'></script>
+	<script src='{% static "js/jquery.terminal-0.7.3.js" %}'></script>
+	<script src='{% static "terminal/js/terminal.js" %}'></script>
+	<script type="text/javascript">
+		$(function() {
+			var firstPost = {
+				id: {{ id }},
+				date: '{{ date }}',
+				title: '{{ title }}',
+				content: '{{ content }}'
+			};
+			loadTerminal($('.terminal'), firstPost);
+		});
+	</script>
+	<title>whyjustin</title>
+</head>
+<body>
+	<div class='terminal'></div>
+</body>

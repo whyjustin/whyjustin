@@ -1,0 +1,15 @@
+body {
+	margin: 0px;
+	background-color: #000;
+}
+.terminal {
+	width: 100%;
+	height: 100%;
+}
+.terminal, .cmd {
+    background-color: #000;
+    color: #44FF11;
+}
+.pacman {
+	margin: 0px auto;
+}
