@@ -1,6 +1,7 @@
 from datetime import datetime
 from django.shortcuts import render
 from json import loads
+from os import path
 from rest_framework.decorators import api_view
 from rest_framework.renderers import JSONRenderer
 from rest_framework.response import Response
@@ -48,6 +49,8 @@ def get_post(request, id):
 	return Response(serializer.data)
 
 def get_wordpress_credentials():
-	settings_text = open('conf/settings.json', 'r').read()
+	loc = path.dirname(__file__);
+	settings_loc = path.join(loc, '../conf/settings.json')
+	settings_text = open(settings_loc, 'r').read()
 	settings = loads(settings_text)
 	return settings["wordpress"]
