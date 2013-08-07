@@ -10,27 +10,17 @@ from wordpress_xmlrpc import Client
 from wordpress_xmlrpc.methods.posts import GetPosts, GetPost
 
 def index(request):
-	first_post = get_first_post()
-	return render(request, 'terminal/index.html', first_post)
+	wordpress_settings = get_wordpress_meta()
+	first_post = get_first_post(wordpress_settings)
+	return render(request, 'terminal/index.html', dict(post=first_post, wordpress=wordpress_settings["url"]))
 
 def pacman(request):
 	return render(request, 'terminal/pacman.html')
 
-def get_first_post():
-	wordpress_settings = get_wordpress_meta()
-	wp = Client(wordpress_settings["url"], wordpress_settings["username"], wordpress_settings["password"])
-	posts = wp.call(GetPosts({
-			'number': 1,
-			'order': 'DESC',
-			'orderby': 'post_date_gmt'
-		}));
-	serializer = PostSerializer(posts)
-	return serializer.data[0]
-
 @api_view(['GET'])
 def get_posts(request):
 	wordpress_settings = get_wordpress_meta()
-	wp = Client(wordpress_settings["url"], wordpress_settings["username"], wordpress_settings["password"])
+	wp = Client(wordpress_settings["rpc"], wordpress_settings["username"], wordpress_settings["password"])
 	posts = wp.call(GetPosts({
 			'order': 'DESC',
 			'orderby': 'post_date_gmt'
@@ -41,7 +31,7 @@ def get_posts(request):
 @api_view(['GET'])
 def get_post(request, id):
 	wordpress_settings = get_wordpress_meta()
-	wp = Client(wordpress_settings["url"], wordpress_settings["username"], wordpress_settings["password"])
+	wp = Client(wordpress_settings["rpc"], wordpress_settings["username"], wordpress_settings["password"])
 	post = wp.call(GetPost({
 		'post_id': id
 		}));
@@ -54,3 +44,13 @@ def get_wordpress_meta():
 	settings_text = open(settings_loc, 'r').read()
 	settings = loads(settings_text)
 	return settings["wordpress"]
+
+def get_first_post(wordpress_settings):
+	wp = Client(wordpress_settings["rpc"], wordpress_settings["username"], wordpress_settings["password"])
+	posts = wp.call(GetPosts({
+			'number': 1,
+			'order': 'DESC',
+			'orderby': 'post_date_gmt'
+		}));
+	serializer = PostSerializer(posts)
+	return serializer.data[0]

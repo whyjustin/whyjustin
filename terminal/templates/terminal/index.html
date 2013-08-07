@@ -9,13 +9,15 @@
 	<script src='{% static "terminal/js/terminal.js" %}'></script>
 	<script type="text/javascript">
 		$(function() {
-			var firstPost = {
-				id: {{ id }},
-				date: '{{ date }}',
-				title: '{{ title }}',
-				content: '{{ content }}'
+			var settings = {
+				firstPost: {
+					date: '{{ post.date }}',
+					title: '{{ post.title }}',
+					content: '{{ post.content }}'
+				},
+				wordpress: '{{ wordpress }}'
 			};
-			loadTerminal($('.terminal'), firstPost);
+			loadTerminal($('.terminal'), settings);
 		});
 	</script>
 	<title>whyjustin</title>

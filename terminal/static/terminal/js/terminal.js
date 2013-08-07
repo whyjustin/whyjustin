@@ -1,10 +1,10 @@
-function loadTerminal(element, firstPost) {
+function loadTerminal(element, settings) {
 	const CONST_HELP = '\n' +
 	'[?]: select option/post\n' +
 	'ls: list blog posts\n' +
 	'github: open github profile\n' +
 	'linkedin: open linkedin profile\n' +
-	'pacman: play pacman\n';
+	'xinit: start X Window System server\n'
 	const CONST_BITOIN = 'blockchain.info/address/1Kqj1BxcFYQy4X2k6VwDitYXowPfNaerFF';
 	const CONST_GITHUB = 'github.com/whyjustin';
 	const CONST_LINKEDIN = 'www.linkedin.com/in/whyjustin';
@@ -89,14 +89,14 @@ function loadTerminal(element, firstPost) {
 	'\n' + 
 	'1Kqj1BxcFYQy4X2k6VwDitYXowPfNaerFF - [3] blockchain.info/address/1Kqj1BxcFYQy4X2k6VwDitYXowPfNaerFF\n';
 
-	if (firstPost) {
+	if (settings) {
 		greeting += '\n' + 
-			'Latest Post: [4] [' + new Date(firstPost.date).toLocaleString() + '] ' + firstPost.title + '\n';
+			'Latest Post: [4] [' + new Date(settings.firstPost.date).toLocaleString() + '] ' + settings.firstPost.title + '\n';
 	}
 
 	var self = this;
 	self.$terminal = element;
-	self.firstPost = firstPost;
+	self.settings = settings;
 
 	function bitcoin() {
 		window.location = 'https://' + CONST_BITCOIN;
@@ -150,11 +150,15 @@ function loadTerminal(element, firstPost) {
 	}
 
 	function openFirstPost() {
-		echoPost(self.firstPost);
+		echoPost(self.settings.firstPost);
 	}
 
 	function pacman() {
 		window.location = "./terminal/pacman";
+	}
+
+	function xinit() {
+		window.location = self.settings.wordpress;
 	}
 
 	var termOptions = {
@@ -165,7 +169,8 @@ function loadTerminal(element, firstPost) {
 		ls: ls,
 		exit: exit,
 		pacman: pacman,
-		q: exit
+		q: exit,
+		xinit: xinit
 	};
 	var homeOptions = {
 		1: linkedin,
