@@ -135,7 +135,7 @@ function loadTerminal(element, settings) {
 			var options = {};
 			var results = '';
 			$.each(data, function(index, item) {
-				results += '[' + (index + 1) + '] ' + item.title + '\n';
+				results += '[' + (index + 1) + '] [' + new Date(item.date).toLocaleString() + '] ' + item.title + '\n';
 				options[index + 1] = lsPost;
 			});
 			$.extend(options, termOptions);
