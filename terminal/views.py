@@ -17,8 +17,8 @@ def pacman(request):
 	return render(request, 'terminal/pacman.html')
 
 def get_first_post():
-	wordpress_settings = get_wordpress_credentials()
-	wp = Client('http://localhost:8888/wordpress/xmlrpc.php', wordpress_settings["username"], wordpress_settings["password"])
+	wordpress_settings = get_wordpress_meta()
+	wp = Client(wordpress_settings["url"], wordpress_settings["username"], wordpress_settings["password"])
 	posts = wp.call(GetPosts({
 			'number': 1,
 			'order': 'DESC',
@@ -29,8 +29,8 @@ def get_first_post():
 
 @api_view(['GET'])
 def get_posts(request):
-	wordpress_settings = get_wordpress_credentials()
-	wp = Client('http://localhost:8888/wordpress/xmlrpc.php', wordpress_settings["username"], wordpress_settings["password"])
+	wordpress_settings = get_wordpress_meta()
+	wp = Client(wordpress_settings["url"], wordpress_settings["username"], wordpress_settings["password"])
 	posts = wp.call(GetPosts({
 			'order': 'DESC',
 			'orderby': 'post_date_gmt'
@@ -40,15 +40,15 @@ def get_posts(request):
 
 @api_view(['GET'])
 def get_post(request, id):
-	wordpress_settings = get_wordpress_credentials()
-	wp = Client('http://localhost:8888/wordpress/xmlrpc.php', wordpress_settings["username"], wordpress_settings["password"])
+	wordpress_settings = get_wordpress_meta()
+	wp = Client(wordpress_settings["url"], wordpress_settings["username"], wordpress_settings["password"])
 	post = wp.call(GetPost({
 		'post_id': id
 		}));
 	serializer = PostSerializer(post)
 	return Response(serializer.data)
 
-def get_wordpress_credentials():
+def get_wordpress_meta():
 	loc = path.dirname(__file__);
 	settings_loc = path.join(loc, '../conf/settings.json')
 	settings_text = open(settings_loc, 'r').read()
