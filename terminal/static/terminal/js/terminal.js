@@ -129,6 +129,7 @@ function loadTerminal(element, firstPost) {
 	}
 
 	function ls() {
+		self.$terminal.pause();
 		$.get('./terminal/wpapi', function(data) {
 			self.posts = data;
 			var options = {};
@@ -140,6 +141,7 @@ function loadTerminal(element, firstPost) {
 			$.extend(options, termOptions);
 			self.$terminal.push(options, { prompt: '$ ', exit: false });
 			self.$terminal.echo('\n' + results);
+			self.$terminal.resume();
 		});
 	}
 
