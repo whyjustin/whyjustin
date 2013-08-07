@@ -129,7 +129,7 @@ function loadTerminal(element, firstPost) {
 	}
 
 	function ls() {
-		$.get('/terminal/wpapi', function(data) {
+		$.get('./terminal/wpapi', function(data) {
 			self.posts = data;
 			var options = {};
 			var results = '';
