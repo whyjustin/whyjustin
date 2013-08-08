@@ -14,7 +14,7 @@
 				firstPost: {
 					date: '{{ post.date }}',
 					title: '{{ post.title }}',
-					content: '{{ post.content|remove_newlines }}'
+					content: '{{ post.content|format_for_js }}'
 				},
 				wordpress: '{{ wordpress }}'
 			};
