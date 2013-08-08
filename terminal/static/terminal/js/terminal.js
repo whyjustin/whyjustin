@@ -109,11 +109,6 @@ function loadTerminal(element, settings) {
 	}
 
 	function echoPost(post) {
-		if (!post) {
-			var history = self.$terminal.history().data();
-			var command = parseInt(history[history.length - 1]);
-			post = self.posts[command - 1];
-		}
 		self.$terminal.echo('\n[' + new Date(post.date).toLocaleString() + '] ' + post.title + '\n' +
 			'----------------------------------------\n' + post.content + '\n');
 	}
@@ -124,10 +119,6 @@ function loadTerminal(element, settings) {
 
 	function help() {
 		self.$terminal.echo(CONST_HELP);
-	}
-
-	function getPost(id) {
-
 	}
 
 	function github() {
@@ -146,7 +137,7 @@ function loadTerminal(element, settings) {
 			var results = '';
 			$.each(data, function(index, item) {
 				results += '[' + (index + 1) + '] [' + new Date(item.date).toLocaleString() + '] ' + item.title + '\n';
-				options[index + 1] = lsPost;
+				options[index + 1] = openLsPost;
 			});
 			$.extend(options, termOptions);
 			self.$terminal.push(options, { prompt: '$ ', exit: false });
@@ -155,14 +146,25 @@ function loadTerminal(element, settings) {
 		});
 	}
 
-	function lsPost() {
-		echoPost();
+	function openLsPost() {
+		var history = self.$terminal.history().data();
+		var command = parseInt(history[history.length - 1]);
+		post = self.posts[command - 1];
+		location.hash = post.id;
+		echoPost(post);
 	}
 
 	function openFirstPost() {
+		openRemotePost(self.settings.firstPost.id);
+	}
+
+	function openRemotePost(id) {
 		self.$terminal.pause();
-		$.get('./terminal/wpapi/' + self.settings.firstPost.id, function(data) {
+		$.get('./terminal/wpapi/' + id).done(function(data) {
 			echoPost(data);
+			self.$terminal.resume();
+		}).fail(function() {
+			self.$terminal.echo('\nError loading post.\n');
 			self.$terminal.resume();
 		});
 	}
@@ -201,4 +203,8 @@ function loadTerminal(element, settings) {
 	}
 	$(window).resize(resize);
 	resize();
+
+	if (location.hash) {
+		openRemotePost(location.hash.substring(1));
+	}
 }
