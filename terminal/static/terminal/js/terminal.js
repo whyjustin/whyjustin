@@ -126,6 +126,10 @@ function loadTerminal(element, settings) {
 		self.$terminal.echo(CONST_HELP);
 	}
 
+	function getPost(id) {
+
+	}
+
 	function github() {
 		browse('https://' + CONST_GITHUB);
 	}
@@ -156,7 +160,11 @@ function loadTerminal(element, settings) {
 	}
 
 	function openFirstPost() {
-		echoPost(self.settings.firstPost);
+		self.$terminal.pause();
+		$.get('./terminal/wpapi/' + self.settings.firstPost.id, function(data) {
+			echoPost(data);
+			self.$terminal.resume();
+		});
 	}
 
 	function pacman() {

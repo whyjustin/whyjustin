@@ -12,9 +12,9 @@
 		$(function() {
 			var settings = {
 				firstPost: {
-					date: '{{ post.date }}',
-					title: '{{ post.title }}',
-					content: '{{ post.content|format_for_js }}'
+					id: {{ post.id }},
+					date: '{{ post.date|format_date }}',
+					title: '{{ post.title }}'
 				},
 				wordpress: '{{ wordpress }}'
 			};

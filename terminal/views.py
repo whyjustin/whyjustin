@@ -25,7 +25,7 @@ def get_posts(request):
 			'order': 'DESC',
 			'orderby': 'post_date_gmt'
 		}));
-	serializer = PostSerializer(posts)
+	serializer = PostSerializer(posts, many=True)
 	return Response(serializer.data)
 
 @api_view(['GET'])
@@ -52,5 +52,5 @@ def get_first_post(wordpress_settings):
 			'order': 'DESC',
 			'orderby': 'post_date_gmt'
 		}));
-	serializer = PostSerializer(posts)
+	serializer = PostSerializer(posts, many=True)
 	return serializer.data[0]
