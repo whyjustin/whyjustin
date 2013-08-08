@@ -155,6 +155,7 @@ function loadTerminal(element, settings) {
 	}
 
 	function openFirstPost() {
+		location.hash = self.settings.firstPost.id;
 		openRemotePost(self.settings.firstPost.id);
 	}
 
