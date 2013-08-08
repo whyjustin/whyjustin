@@ -32,9 +32,7 @@ def get_posts(request):
 def get_post(request, id):
 	wordpress_settings = get_wordpress_meta()
 	wp = Client(wordpress_settings["rpc"], wordpress_settings["username"], wordpress_settings["password"])
-	post = wp.call(GetPost({
-		'post_id': id
-		}));
+	post = wp.call(GetPost(id))
 	serializer = PostSerializer(post)
 	return Response(serializer.data)
 
