@@ -186,4 +186,11 @@ function loadTerminal(element, settings) {
 	};
 	$.extend(homeOptions, termOptions);
 	self.$terminal.terminal(homeOptions, { prompt: '$ ', greetings: greeting, exit: false });
+
+	var padding = 20;
+	function resize() {
+		self.$terminal.height($(window).height() - padding);
+	}
+	$(window).resize(resize);
+	resize();
 }
