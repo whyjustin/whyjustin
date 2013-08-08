@@ -1,4 +1,5 @@
 {% load staticfiles %}
+{% load template_tags %}
 <head>
 	<link href='{% static "css/jquery.terminal.css" %}' rel="stylesheet"/>
 	<link href='{% static "terminal/css/terminal.css" %}' rel="stylesheet"/>
@@ -13,7 +14,7 @@
 				firstPost: {
 					date: '{{ post.date }}',
 					title: '{{ post.title }}',
-					content: '{{ post.content }}'
+					content: '{{ post.content|remove_newlines }}'
 				},
 				wordpress: '{{ wordpress }}'
 			};

@@ -99,7 +99,13 @@ function loadTerminal(element, settings) {
 	self.settings = settings;
 
 	function bitcoin() {
-		window.location = 'https://' + CONST_BITCOIN;
+		browse('https://' + CONST_BITCOIN);
+	}
+
+	function browse(url) {
+		self.$terminal.echo('\nLoading...\n');
+		self.$terminal.pause();
+		window.location = url;
 	}
 
 	function echoPost(post) {
@@ -121,11 +127,11 @@ function loadTerminal(element, settings) {
 	}
 
 	function github() {
-		window.location = 'https://' + CONST_GITHUB;
+		browse('https://' + CONST_GITHUB);
 	}
 
 	function linkedin() {
-		window.location = 'https://' + CONST_LINKEDIN;
+		browse('https://' + CONST_LINKEDIN);
 	}
 
 	function ls() {
@@ -154,11 +160,11 @@ function loadTerminal(element, settings) {
 	}
 
 	function pacman() {
-		window.location = "./terminal/pacman";
+		browse("./terminal/pacman");
 	}
 
 	function xinit() {
-		window.location = self.settings.wordpress;
+		browse(self.settings.wordpress);
 	}
 
 	var termOptions = {
